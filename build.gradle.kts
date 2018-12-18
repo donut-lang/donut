@@ -12,10 +12,10 @@ repositories {
 
 dependencies {
     testCompile("junit", "junit", "4.12")
-    compile("org.slf4j:slf4j-simple:1.7.21")
-    compile("info.picocli:picocli:2.2.1")
-    compile("org.jetbrains:annotations:16.0.2")
-    compile("org.json:json:20180130")
+    compile("org.slf4j:slf4j-simple:1.7.25")
+    compile("info.picocli:picocli:3.8.2")
+    compile("org.jetbrains:annotations:16.0.3")
+    compile("org.json:json:20180813")
     compile("commons-codec:commons-codec:1.11")
 }
 
@@ -39,13 +39,21 @@ val fullJar = task("fullJar", type = Jar::class) {
     manifest {
         attributes["Main-Class"] = entryPoint
     }
-    from(configurations.runtime.map({ if (it.isDirectory) it else zipTree(it) }))
+    from(configurations.runtime.get().map { if (it.isDirectory) it else zipTree(it) })
     with(tasks["jar"] as CopySpec)
 }
 
 tasks {
-    "build" {
+    "build"(Task::class) {
         dependsOn(gitVer)
         dependsOn(fullJar)
     }
+
+    task("run-donut", type = JavaExec::class) {
+        main = "donut.Main"
+        classpath = sourceSets["main"].runtimeClasspath
+        args()
+        dependsOn(gitVer)
+    }
 }
+

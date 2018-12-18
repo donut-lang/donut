@@ -1,7 +1,15 @@
 
 struct Executor {
-
+  i int
 }
 
-role {
+role Counter {
+  func CountUp() int
+  i int
+}
+
+play Executor as Counter {
+  func CountUp() int {
+  }
+  i = self.i
 }
