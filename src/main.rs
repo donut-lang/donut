@@ -1,3 +1,5 @@
-fn main() {
-  println!("Hello, world!");
+mod lang;
+
+fn main() -> anyhow::Result<()> {
+  Ok(())
 }
