@@ -13,3 +13,9 @@ repository = "https://github.com/donut-lang/donut"
 
 [dependencies]
 anyhow = "1.0.52"
+rustc-llvm-proxy = "0.2.0"
+inkwell = { git = "https://github.com/TheDan64/inkwell", branch = "master", features = ["llvm13-0-no-llvm-linking"] }
+
+[dependencies.llvm-sys]
+version = "130"
+features = ["no-llvm-linking", "disable-alltargets-init"]
